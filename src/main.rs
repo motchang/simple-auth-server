@@ -6,10 +6,11 @@ use actix_web::{middleware, web, App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
-mod models;
-mod schema;
+mod email_service;
 mod errors;
 mod invitation_handler;
+mod models;
+mod schema;
 mod utils;
 
 #[actix_rt::main]

@@ -23,14 +23,13 @@ pub async fn post_invitation(
         Err(err) => match err {
             BlockingError::Error(service_error) => Err(service_error),
             BlockingError::Canceled => Err(ServiceError::InternalServerError),
-        }
+        },
     }
 }
 
 fn create_invitation(
     eml: String,
     pool: web::Data<Pool>,
-
 ) -> Result<(), crate::errors::ServiceError> {
     let invitation = dbg!(query(eml, pool)?);
     // send_invitation(&invitatio)

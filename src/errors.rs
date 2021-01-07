@@ -5,7 +5,7 @@ use std::convert::From;
 use uuid::Error as ParseError;
 
 #[derive(Debug, Display)]
-pub enum ServiceError{
+pub enum ServiceError {
     #[display(fmt = "Internal Server Error")]
     InternalServerError,
 
