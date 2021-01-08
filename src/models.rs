@@ -22,6 +22,17 @@ impl User {
     }
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SlimUser {
+    pub email: String,
+}
+
+impl From<User> for SlimUser {
+    fn from(user: User) -> Self {
+        SlimUser { email: user.email }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name = "invitations"]
 pub struct Invitation {
