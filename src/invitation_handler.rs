@@ -32,7 +32,8 @@ fn create_invitation(
     pool: web::Data<Pool>,
 ) -> Result<(), crate::errors::ServiceError> {
     let invitation = dbg!(query(eml, pool)?);
-    send_invitation(&invitation)
+    // send_invitation(&invitation)
+    Ok(())
 }
 
 fn query(eml: String, pool: web::Data<Pool>) -> Result<Invitation, crate::errors::ServiceError> {

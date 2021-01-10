@@ -6,10 +6,12 @@ use actix_web::{middleware, web, App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
+mod auth_handler;
 mod email_service;
 mod errors;
 mod invitation_handler;
 mod models;
+mod register_handler;
 mod schema;
 mod utils;
 
@@ -48,20 +50,21 @@ async fn main() -> std::io::Result<()> {
             .data(web::JsonConfig::default().limit(4096))
             // everything under '/api/' route
             .service(
-                web::scope("/api").service(
-                    web::resource("/invitation")
-                        .route(web::post().to(invitation_handler::post_invitation)),
-                )
-                // .service(
-                //     web::resource("/register/{invitation_id}")
-                //         .route(web::post().to(register_handler::register_user)),
-                // )
-                // .service(
-                //     web::resource("/auth")
-                //         .route(web::post().to(auth_handler::login))
-                //         .route(web::delete().to(auth_handler::logout))
-                //         .route(web::get().to(auth_handler::get_me)),
-                // ),
+                web::scope("/api")
+                    .service(
+                        web::resource("/invitation")
+                            .route(web::post().to(invitation_handler::post_invitation)),
+                    )
+                    .service(
+                        web::resource("/register/{invitation_id}")
+                            .route(web::post().to(register_handler::register_user)),
+                    )
+                    .service(
+                        web::resource("/auth")
+                            .route(web::post().to(auth_handler::login))
+                            .route(web::delete().to(auth_handler::logout))
+                            .route(web::get().to(auth_handler::get_me)),
+                    ),
             )
     })
     .bind("127.0.0.1:3000")?
